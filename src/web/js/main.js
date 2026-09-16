@@ -44,6 +44,16 @@ const vertices = [
   { x: -.5, y: -.5, z: -.5 },
   { x: -.5, y: .5, z: -.5 }
 ]
+const faces = [
+  [0, 1, 2, 3],
+  [4, 5, 6, 7],
+  [0, 4], 
+  [1, 5], 
+  [2, 6], 
+  [3, 7], 
+
+
+]
 function rotate_xz({ x, y, z }, theta) {
   // rotate around the y axis
   const new_x = x * Math.cos(theta) - z * Math.sin(theta);
@@ -55,18 +65,29 @@ function translate_z({ x, y, z }, dz) {
   return { x: x, y: y, z: z + dz };
 
 }
+function draw_line(p1, p2) {
+  ctx.beginPath();
+  ctx.strokeStyle = FOREGROUND_COLOR;
+  ctx.lineWidth = 1;
+  ctx.moveTo(p1.x, p1.y)
+  ctx.lineTo(p2.x, p2.y)
+  ctx.stroke();
+}
 const FPS = 60;
 let d_theta = 0
 function frame() {
 
   clear()
   d_theta += (2 * Math.PI) / (FPS * 4);
-  for (vertice of vertices) {
-    let rotated = rotate_xz(vertice, d_theta);
-    let translated = translate_z(rotated, 2);
-    let projected = project(translated);
-    let screen_coorded = screen_coords(projected);
-    draw_point(screen_coorded, 3);
+  for (face of faces) {
+    for (let i = 0; i < face.length; i++) {
+      const a = vertices[face[i]];
+      const b = vertices[face[(i + 1) % face.length]];
+      draw_line(
+        screen_coords(project(translate_z(rotate_xz(a, d_theta), 2))),
+        screen_coords(project(translate_z(rotate_xz(b, d_theta), 2)))
+      );
+    }
   }
   setTimeout(frame, 1000 / FPS);
 }
