@@ -7,10 +7,9 @@ type Triangle = Vec3[];
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d")!;
 
-// Colors live in style.css so the page and the drawing share one palette
 const css_vars = getComputedStyle(document.documentElement);
-const FOREGROUND_COLOR = css_vars.getPropertyValue("--line").trim();
-const BACKGROUND_COLOR = css_vars.getPropertyValue("--canvas-bg").trim();
+const FOREGROUND_COLOR = css_vars.getPropertyValue("--line").trim() || "#64d2ff";
+const BACKGROUND_COLOR = css_vars.getPropertyValue("--canvas-bg").trim() || "#0d0d0f";
 
 function resize_canvas() {
   const { width, height } = canvas.getBoundingClientRect();
@@ -129,7 +128,6 @@ window.addEventListener("keydown", (event) => {
   held_keys.add(event.key);
 });
 window.addEventListener("keyup", (event) => held_keys.delete(event.key));
-// Keyup never arrives if the window loses focus mid-press, so forget held keys
 window.addEventListener("blur", () => held_keys.clear());
 
 function move_from_keys() {
