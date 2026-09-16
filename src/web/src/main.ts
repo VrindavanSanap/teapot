@@ -43,7 +43,6 @@ function project({ x, y, z }: Vec3): Vec2 {
 }
 
 function rotate_xz({ x, y, z }: Vec3, theta: number): Vec3 {
-  // rotate around the y axis
   const new_x = x * Math.cos(theta) - z * Math.sin(theta);
   const new_z = x * Math.sin(theta) + z * Math.cos(theta);
 
@@ -51,7 +50,6 @@ function rotate_xz({ x, y, z }: Vec3, theta: number): Vec3 {
 }
 
 function rotate_yz({ x, y, z }: Vec3, phi: number): Vec3 {
-  // rotate around the x axis
   const new_y = y * Math.cos(phi) - z * Math.sin(phi);
   const new_z = y * Math.sin(phi) + z * Math.cos(phi);
 
