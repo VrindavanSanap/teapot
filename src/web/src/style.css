@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background: black;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 16px;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  /* The largest square that fits the screen */
+  width: min(100%, calc(100dvh - 32px));
+  height: auto;
+  aspect-ratio: 1;
+}
